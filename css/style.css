@@ -1,0 +1,139 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transition: background-color 0.5s ease;
+    background-color: #eee193; /* Day mode background color */
+}
+
+.dark-mode {
+    background-color: #333; /* Night mode background color */
+}
+
+.switch {
+    width: 100px;
+    height: 50px;
+    background-color: #ccc;
+    border-radius: 25px;
+    cursor: pointer;
+    position: relative; /* Allows for absolute positioning of children */
+}
+
+.switch-circle {
+    width: 48px;
+    height: 48px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease; /* Smooth transition for toggle movement */
+}
+
+.switch-circle .icon {
+    display: block; /* Ensures icons are displayed inside the circle */
+}
+
+.dark-mode .switch-circle {
+    transform: translateX(50px); /* Moves circle to indicate night mode */
+}
+
+.icon-moon {
+    display: none; /* Hides moon icon by default */
+}
+
+.dark-mode .icon-sun {
+    display: none; /* Hides sun icon in night mode */
+}
+
+.dark-mode .icon-moon {
+    display: block; /* Shows moon icon in night mode */
+}
+
+h1 {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: color 0.5s ease; /* Transition for text color change */
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 80%);
+    border-radius: 50%;
+    transform: translateX(-50%) scale(1.5);
+    z-index: 2;
+    transition: opacity 0.5s ease;
+    opacity: 0; /* Glare effect, visible in day mode only */
+}
+
+body:not(.dark-mode)::before {
+    opacity: 1; /* Make glare visible in day mode */
+}
+
+.star, .cloud {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 1; /* Base layer for stars and clouds */
+}
+
+.star {
+    width: 2px;
+    height: 2px;
+    animation: blink 2s infinite ease-in-out alternate; /* Twinkling animation for stars */
+}
+
+.cloud {
+    width: 120px;
+    height: 60px;
+    animation: moveClouds 20s linear infinite; /* Continuous moving animation for clouds */
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background-color: #fff;
+}
+
+.cloud::before,
+.cloud::after {
+    z-index: -1; /* Ensures cloud parts are behind the main cloud shape */
+}
+
+.cloud::before {
+    width: 80px;
+    height: 80px;
+    top: -40px;
+    left: 10px;
+    border-radius: 40px; /* Front cloud fluff */
+}
+
+.cloud::after {
+    width: 100px;
+    height: 100px;
+    top: -30px;
+    right: 10px;
+    border-radius: 50px; /* Back cloud fluff */
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; } /* Controls the blink effect opacity */
+}
+
+@keyframes moveClouds {
+    0% { left: -120px; }
+    100% { left: 110%; } /* Animates clouds across the screen */
+}
